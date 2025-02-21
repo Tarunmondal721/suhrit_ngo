@@ -1,5 +1,5 @@
 services:
-  - name: gyaan-quest
+  - name: suhrit_organisation
     type: web
     runtime: docker
     repo: https://github.com/Tarunmondal721/suhrit_ngo.git
