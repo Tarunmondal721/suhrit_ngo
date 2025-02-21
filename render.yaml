@@ -2,12 +2,12 @@ services:
   - name: gyaan-quest
     type: web
     runtime: docker
-    repo: https://github.com/Subhadip023/GyaanQuest.git
+    repo: https://github.com/Tarunmondal721/suhrit_ngo.git
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_URL
-        value: https://gyaanquest.onrender.com  
+        value: https://suhrit-organization.onrender.com
       - key: APP_FORCE_HTTPS
         value: "true"
       - key: APP_KEY
@@ -16,7 +16,7 @@ services:
         value: pgsql
     buildCommand: |
       composer install --no-dev --optimize-autoloader
-      npm install && npm run build
+      npm install && npm run dev
       php artisan cache:clear
       php artisan config:clear
       php artisan route:clear
