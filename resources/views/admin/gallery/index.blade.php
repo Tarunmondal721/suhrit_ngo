@@ -115,6 +115,7 @@
                             <select name="photo_category" class="form-control select2 select2-hidden-accessible language-select" style="width: 100%;" tabindex="-1" aria-hidden="true" id="" required>
                                 <option value="Education">Education</option>
                                 <option value="Donation">Donation</option>
+                                <option value="Social Work">Social Work</option>
                                 <option value="Event">Event</option>
                                 <option value="Team">Team</option>
                                 <option value="Achievement">Achievement</option>
