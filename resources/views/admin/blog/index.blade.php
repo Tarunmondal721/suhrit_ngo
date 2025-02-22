@@ -14,7 +14,7 @@
             </button>
         </div>
         <div class="card-body table-responsive">
-         
+
             <table class="table table-striped table-fixed table-hover align-middle text-center" id="blogs-table">
                 <thead class="table-dark">
                     <tr>
@@ -37,7 +37,7 @@
                                 <td class="col-md-3">
                                     <img src="{{ asset('assets/blog/' . $item->image) }}"
                                         class="img-thumbnail rounded-circle"
-                                        style="width: 54px; height: 51px; object-fit: cover;" alt="Image Not Found">
+                                        style="width: 54px; height: 51px; object-fit: cover;" alt="">
                                 </td>
 
                                 <td>

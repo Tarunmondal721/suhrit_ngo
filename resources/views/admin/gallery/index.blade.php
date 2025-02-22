@@ -34,7 +34,7 @@
                     </button>
                 </div>
             @endif --}}
-            <table class="table table-striped table-fixed table-hover align-middle text-center" id="blogs-table">
+            <table class="table table-striped table-fixed table-hover align-middle text-center" id="gallery-table">
                 <thead class="table-dark">
                     <tr>
                         <th>Id</th>
@@ -57,13 +57,12 @@
                                 <td class="col-md-3">
                                     <img src="{{ asset('assets/gallery/' . $item->image) }}"
                                         class="img-thumbnail rounded-circle"
-                                        style="width: 54px; height: 51px; object-fit: cover;" alt="Image Not Found">
+                                        style="width: 54px; height: 51px; object-fit: cover;" alt="">
                                 </td>
 
                                 <td>
                                     <button class="btn btn-primary edit-gallery-btn" data-id="{{ $item->id }}"
-                                        data-title="{{ $item->title }}"
-                                        data-category="{{ $item->category }}"
+                                        data-title="{{ $item->title }}" data-category="{{ $item->category }}"
                                         data-description="{{ $item->description }}"
                                         data-image="{{ asset('assets/gallery/' . $item->image) }}"
                                         data-target="#editBlogModal">
@@ -112,10 +111,13 @@
                         </div>
                         <div class="form-group">
                             <label for="blog_date">Photo Category</label>
-                            <select name="photo_category" class="form-control select2 select2-hidden-accessible language-select" style="width: 100%;" tabindex="-1" aria-hidden="true" id="" required>
+                            <select name="photo_category"
+                                class="form-control select2 select2-hidden-accessible language-select" style="width: 100%;"
+                                tabindex="-1" aria-hidden="true" id="" required>
+                                <option value="" disabled selected> Select Category</option>
                                 <option value="Education">Education</option>
                                 <option value="Donation">Donation</option>
-                                <option value="Social Work">Social Work</option>
+                                <option value="Social_Work">Social Work</option>
                                 <option value="Event">Event</option>
                                 <option value="Team">Team</option>
                                 <option value="Achievement">Achievement</option>
@@ -140,7 +142,7 @@
     </div>
 
 
-    <!-- Edit Blog Modal -->
+    <!-- Edit Gallery Modal -->
     <div class="modal fade" id="editBlogModal" tabindex="-1" aria-labelledby="editBlogModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -162,11 +164,16 @@
                         </div>
                         <div class="form-group">
                             <label for="blog_date">Photo Category</label>
-                            <select name="photo_category" id="edit-photo-category" class="form-control select2 select2-hidden-accessible language-select" style="width: 100%;" tabindex="-1" aria-hidden="true" required>
+                            <select name="photo_category" id="edit-photo-category"
+                                class="form-control select2 select2-hidden-accessible language-select"
+                                style="width: 100%;" tabindex="-1" aria-hidden="true" required>
+                                <option value="" disabled selected>Select Category</option>
                                 <option value="Education">Education</option>
                                 <option value="Donation">Donation</option>
                                 <option value="Event">Event</option>
                                 <option value="Team">Team</option>
+                                <option value="Achievement">Achievement</option>
+                                <option value="Social_Work">Social Work</option>
                             </select>
                         </div>
 
@@ -193,24 +200,39 @@
 
 @push('scripts')
     <script>
-        $('#blogs-table').DataTable();
+        $('#gallery-table').DataTable();
 
         // Handle Edit button click
         $('.edit-gallery-btn').on('click', function() {
             console.log('hhhh');
             var id = $(this).data('id');
             var title = $(this).data('title');
-            var category = $(this).data('category');
+            var category = $(this).data('category').trim(); // Ensure no extra spaces
             var description = $(this).data('description');
             var image = $(this).data('image');
+            console.log("Category from data attribute:", category); // Debugging
 
             $('#edit-blog-id').val(id);
             $('#edit-blog-title').val(title);
-            $('#edit-photo-category').val(category);
             $('#edit-blog-description').val(description);
             $('#current-image').attr('src', image);
+
+            // Reset selection
+            $('#edit-photo-category').val("").change();
+
+            // Select the correct option
+            $('#edit-photo-category option').each(function() {
+                if ($(this).val().trim() === category) {
+                    $(this).prop('selected', true);
+                    return false; // Exit loop once found
+                }
+            });
+
+            $('#edit-photo-category').trigger('change'); // If using Select2
+
             $('#editBlogModal').modal('show');
         });
+
 
         $('.hide').on('click', function() {
             $('#editBlogModal').modal('hide');
@@ -227,7 +249,7 @@
         $(document).ready(function() {
             $('.language-select').select2({
 
-                placeholder: "Select a programming language",
+                placeholder: "Select a category",
                 allowClear: true
             });
             // $('.edit-photo-category').select2({

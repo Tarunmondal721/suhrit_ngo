@@ -1323,13 +1323,14 @@ ul {
     color: #fff;
     font-size: 16px;
     margin-right: 15px;
+    border-radius: 50%;
 }
 
 .footer-social-icon i {
-    height: 40px;
-    width: 40px;
+    height: 23px;
+    width: 23px;
     text-align: center;
-    line-height: 38px;
+    line-height: 20px;
     border-radius: 50%;
 }
 
@@ -1981,5 +1982,38 @@ ul {
     .event-box {
         margin-bottom: 20px;
     }
+}
+
+/* ################## */
+
+
+
+
+.social-icon i {
+    color: #fff;
+}
+
+.facebook {
+    background-color: #1877F2;
+}
+
+.facebook:hover {
+    background-color: #0f5db1;
+}
+
+.youtube {
+    background-color: #FF0000;
+}
+
+.youtube:hover {
+    background-color: #cc0000;
+}
+
+.instagram {
+    background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
+}
+
+.instagram:hover {
+    filter: brightness(1.2);
 }
 

@@ -333,10 +333,22 @@
                             </div>
                             <div class="footer-social-icon">
                                 <span>Follow us</span>
-                                <a href="https://www.facebook.com/share/151kwnAnug/"><i class="fab fa-facebook-f facebook-bg"></i></a>
-                                <a href="https://youtube.com/@suhrit2023?si=a4LJeVNLSl_Jxa8U"><i class="fab fa-youtube youtube-bg"></i></a>
-                                <a href="https://www.instagram.com/suhritorganization?igsh=MzB5MzNuMDNpNWdp"><i class="fab fa-instagram instagram-bg"></i></a>
+                                <a href="https://www.facebook.com/share/151kwnAnug/" class="social-icon facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="https://youtube.com/@suhrit2023?si=a4LJeVNLSl_Jxa8U" class="social-icon youtube">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="https://www.instagram.com/suhritorganization?igsh=MzB5MzNuMDNpNWdp" class="social-icon instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
                             </div>
+
+                            {{-- <div class="footer-social-icon ">
+                                <span >Follow Us</span>
+
+                            </div> --}}
+
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
@@ -380,7 +392,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 text-center text-lg-left">
                         <div class="copyright-text">
-                            <p>Copyright &copy; {{ $y }}, All Right Reserved | Develop By</p>
+                            <p>Copyright &copy; {{ $y }}, All Right Reserved | Develop By Suhrit Organisation</p>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">

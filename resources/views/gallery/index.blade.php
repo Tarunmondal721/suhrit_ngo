@@ -31,7 +31,7 @@
                 <button class="btn btn-default filter-button" data-filter="all">All</button>
                 @foreach ($categories as $category)
                     <button class="btn btn-default filter-button" data-filter="{{ $category }}">
-                        {{ ucfirst($category) }}
+                        {{ ucwords(str_replace('_', ' ', strtolower($category))) }}
                     </button>
                 @endforeach
             </div>
