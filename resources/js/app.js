@@ -1,5 +1,6 @@
 import './bootstrap';
 import '../css/app.css';
+import axios from "axios";
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -21,3 +22,9 @@ createInertiaApp({
         color: '#4B5563',
     },
 });
+
+
+
+axios.defaults.baseURL = "https://suhrit-organization.onrender.com"; // Always use HTTPS
+axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+
