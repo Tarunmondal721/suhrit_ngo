@@ -42,6 +42,11 @@
     "file": "assets/_plugin-vue_export-helper-DlAUqK2U.js",
     "name": "_plugin-vue_export-helper"
   },
+  "resources/css/app.css": {
+    "file": "assets/app-34JdKUJf.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
   "resources/js/Pages/Auth/ConfirmPassword.vue": {
     "file": "assets/ConfirmPassword-Dg_OBEsb.js",
     "name": "ConfirmPassword",
