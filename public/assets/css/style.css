@@ -2017,3 +2017,24 @@ ul {
     filter: brightness(1.2);
 }
 
+/* ####################### */
+
+.event-image-container img {
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.event-image-container img:hover {
+    transform: scale(1.05);
+}
+
+.event-description {
+    border-left: 4px solid #007bff;
+}
+
+.event-text {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+

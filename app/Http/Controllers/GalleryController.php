@@ -71,7 +71,7 @@ class GalleryController extends Controller
             'photo_title' => 'required|string|max:255',
             'photo_category' => 'required',
             'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:512',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:512',
         ]);
 
         $gallery = Gallery::findOrFail($request->id);
@@ -80,6 +80,10 @@ class GalleryController extends Controller
         $gallery->description = $request->description;
 
         if ($request->hasFile('image')) {
+
+            if ($gallery->image && file_exists(public_path('assets/gallery/' . $gallery->image))) {
+                unlink(public_path('assets/gallery/' . $gallery->image));
+            }
             $image = $request->file('image');
             $imageFileName = 'pic' . rand() . time() . '.' . $image->getClientOriginalExtension();
             $path = 'assets/gallery';

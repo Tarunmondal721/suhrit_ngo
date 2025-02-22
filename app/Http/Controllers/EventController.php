@@ -118,7 +118,7 @@ class EventController extends Controller
     /**
      * Update the specified event in storage via AJAX.
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -126,20 +126,37 @@ class EventController extends Controller
             'date' => 'required|date',
             'time' => 'required',
             'location' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:512',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:512',
         ]);
 
-        $imageFileName = null;
+        $event = Event::findOrFail($request->id);
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->date = $request->date;
+        $event->time = $request->time;
+        $event->location = $request->location;
+        $event->status = $request->status;
+
         if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($event->image && file_exists(public_path('assets/event/' . $event->image))) {
+                unlink(public_path('assets/event/' . $event->image));
+            }
+
+            // Upload new image
             $image = $request->file('image');
-            $imageFileName = 'enent' . rand() . time() . '.' . $image->extension();
+            $imageFileName = 'event' . rand() . time() . '.' . $image->extension();
             $path = 'assets/event';
-            $image->storeAs($path, $imageFileName, ['disk' => 'public_uploads']);
+            $image->move(public_path($path), $imageFileName);
+
+            // Update event image
             $event->image = $imageFileName;
         }
-        $event->update($request->only('title', 'description', 'date', 'time', 'location', 'image'));
-        return redirect()->back()->with('success', 'Event Update successfully!');
+        $event->save();
+
+        return redirect()->back()->with('success', 'Event updated successfully!');
     }
+
 
     /**
      * Remove the specified event from storage via AJAX.

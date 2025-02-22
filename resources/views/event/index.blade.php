@@ -66,6 +66,140 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Event Modal -->
+                    <div class="modal fade" id="eventModal{{ $event->id }}" tabindex="-1" role="dialog"
+                        aria-labelledby="eventModalLabel{{ $event->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary text-white">
+                                    <h5 class="modal-title" id="eventModalLabel{{ $event->id }}">{{ $event->title }}
+                                    </h5>
+                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body p-4">
+                                    <div class="row">
+                                        <!-- Event Image -->
+                                        <div class="col-md-6">
+                                            <img src="{{ asset('assets/event/' . $event->image) }}"
+                                                class="img-fluid rounded mb-3" alt="{{ $event->title }}">
+                                        </div>
+                                        <!-- Event Details -->
+                                        <div class="col-md-6">
+                                            <div class="event-details">
+                                                <h4 class="font-weight-bold mb-2">Event Details</h4>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <strong>Date:</strong>
+                                                    <span>{{ \Carbon\Carbon::parse($event->date)->format('F j, Y') }}</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <strong>Time:</strong>
+                                                    <span>{{ date('h:i A', strtotime($event->time)) }}</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <strong>Location:</strong>
+                                                    <span class="text-justify">{{ $event->location }}</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <strong>Description:</strong>
+                                                    <span class="text-justify">{{ $event->description }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#registerModal{{ $event->id }}">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Registration Modal -->
+                    <div class="modal fade" id="registerModal{{ $event->id }}" tabindex="-1" role="dialog"
+                        aria-labelledby="registerModalLabel{{ $event->id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <!-- Header -->
+                                <div class="modal-header bg-success text-white">
+                                    <h5 class="modal-title" id="registerModalLabel{{ $event->id }}">Register for
+                                        {{ $event->title }}</h5>
+                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <!-- Form -->
+                                <form id="registrationForm{{ $event->id }}"
+                                    action="{{ route('events.register', $event->id) }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <!-- Name -->
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <input type="text" name="name" class="form-control stylish-input"
+                                                id="name" placeholder="Enter your name" required>
+                                        </div>
+
+                                        <!-- Email -->
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" name="email" class="form-control stylish-input"
+                                                id="email" placeholder="Enter your valid email" required>
+
+                                            <button type="button" id="sendotp"
+                                                class="btn btn-info mt-2 stylish-button" onclick="sendOTP()">Verify
+                                                Email</button>
+                                        </div>
+
+                                        <!-- Address -->
+                                        <div class="form-group" id="add" hidden>
+                                            <label for="address">Address</label>
+                                            <textarea name="address" class="form-control stylish-input" id="address" cols="30" rows="3"
+                                                placeholder="Enter your valid address" required></textarea>
+                                        </div>
+
+                                        <!-- Phone Number -->
+                                        <div class="form-group" hidden id="tel">
+                                            <label for="phone">Phone Number</label>
+                                            <input type="text" name="phone" class="form-control stylish-input"
+                                                id="phone" placeholder="Enter your number" required
+                                                oninput="validatePhoneNumber(this)">
+                                            <small id="phoneError" class="text-danger" style="display: none;">Phone
+                                                number
+                                                must be exactly 10 digits.</small>
+
+
+                                            <div id="recaptcha-container"></div>
+
+                                        </div>
+
+                                        <!-- OTP Section -->
+                                        <div class="form-group" id="otpSection" style="display: none;">
+                                            <label for="otp">Enter OTP</label>
+                                            <input type="text" class="form-control stylish-input" id="otp"
+                                                placeholder="Enter OTP">
+                                            <button type="button" class="btn btn-success mt-2 stylish-button"
+                                                onclick="verifyOTP()">Check OTP</button>
+                                            <input type="hidden" id="verificationId" name="verificationId">
+                                        </div>
+                                    </div>
+
+                                    <!-- Footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary stylish-button"
+                                            data-dismiss="modal">Cancel</button>
+                                        <button type="submit" id="registerButton" class="btn btn-primary stylish-button"
+                                            disabled>Register</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             @else
                 <h4 class="text-center text-primary w-100 ">Coming Soon...</h4>
@@ -95,15 +229,15 @@
                             <div class="event-status text-success fw-bold text-center py-2">✅ Completed</div>
                             <!-- Read More Button -->
                             <div class="text-center pb-3">
-                                <button class="btn btn-outline-success stylish-button" data-toggle="modal" data-target="#eventModal{{ $event->id }}">
+                                <button class="btn btn-outline-success stylish-button" data-toggle="modal" data-target="#completeeventModal{{ $event->id }}">
                                     Read More
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Event Details Modal -->
-                    <div class="modal fade" id="eventModal{{ $event->id }}" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel{{ $event->id }}" aria-hidden="true">
+                    <!-- Complete Event Details Modal -->
+                    <div class="modal fade" id="completeeventModal{{ $event->id }}" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel{{ $event->id }}" aria-hidden="true">
                         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-primary text-white">
@@ -113,34 +247,25 @@
                                     </button>
                                 </div>
                                 <div class="modal-body p-4">
-                                    <div class="row">
+                                    <div class="row align-items-center">
                                         <!-- Event Image -->
                                         <div class="col-md-6">
-                                            <img src="{{ asset('assets/event/' . $event->image) }}" class="img-fluid rounded mb-3" alt="{{ $event->title }}">
+                                            <div class="event-image-container">
+                                                <img src="{{ asset('assets/event/' . $event->image) }}" class="img-fluid rounded shadow-lg" alt="{{ $event->title }}">
+                                            </div>
                                         </div>
-                                        <!-- Event Details -->
+
+                                        <!-- Event Description -->
                                         <div class="col-md-6">
-                                            <div class="event-details">
-                                                <h4 class="font-weight-bold mb-2">Event Details</h4>
-                                                <div class="d-flex justify-content-between mb-2">
-                                                    <strong>Date:</strong>
-                                                    <span>{{ \Carbon\Carbon::parse($event->date)->format('F j, Y') }}</span>
-                                                </div>
-                                                <div class="d-flex justify-content-between mb-2">
-                                                    <strong>Time:</strong>
-                                                    <span>{{ date('h:i A', strtotime($event->time)) }}</span>
-                                                </div>
-                                                <div class="d-flex justify-content-between mb-2">
-                                                    <strong>Location:</strong>
-                                                    <span class="text-justify">{{ $event->location }}</span>
-                                                </div>
-                                                <div class="d-flex justify-content-between mb-2">
-                                                    <strong>Description:</strong>
-                                                    <span class="text-justify">{{ $event->description }}</span>
-                                                </div>
+                                            <div class="event-description p-4 bg-light rounded shadow-sm">
+                                                <h3 class="text-primary font-weight-bold">{{ $event->title }}</h3>
+                                                <p class="text-muted"><i class="fas fa-calendar-alt"></i> {{ \Carbon\Carbon::parse($event->date)->format('F j, Y') }}</p>
+                                                <p class="text-muted"><i class="fas fa-map-marker-alt"></i> {{ $event->location }}</p>
+                                                <p class="event-text text-dark">{{ $event->description }}</p>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary stylish-button" data-dismiss="modal">Close</button>

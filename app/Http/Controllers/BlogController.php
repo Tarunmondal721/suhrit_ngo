@@ -74,7 +74,7 @@ class BlogController extends Controller
             'blog_title' => 'required|string|max:255',
             'blog_date' => 'required|date',
             'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:512',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:512',
         ]);
 
         $blog = Blog::findOrFail($request->id);
@@ -83,6 +83,9 @@ class BlogController extends Controller
         $blog->description = $request->description;
 
         if ($request->hasFile('image')) {
+            if ($blog->image && file_exists(public_path('assets/blog/' . $blog->image))) {
+                unlink(public_path('assets/blog/' . $blog->image));
+            }
             $image = $request->file('image');
             $imageFileName = 'blog' . rand() . time() . '.' . $image->getClientOriginalExtension();
             $path = 'assets/blog';

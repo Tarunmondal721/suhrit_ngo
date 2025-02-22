@@ -25,7 +25,7 @@ class ServiceController extends Controller
         $imageFileName = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageFileName = 'pic' . rand() . time() . '.' . $image->extension();
+            $imageFileName = 'service' . rand() . time() . '.' . $image->extension();
             $path = 'assets/service';
             $image->storeAs($path, $imageFileName, ['disk' => 'public_uploads']);
         }
@@ -42,23 +42,36 @@ class ServiceController extends Controller
 
     public function update(Request $request, Service $service)
     {
+     
         $request->validate([
             'title' => 'required|string|max:255',
             'date' => 'nullable|date',
             'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:512'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:512'
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($service->image) {
-                Storage::delete('public/' . $service->image);
-            }
-            $service->image = $request->file('image')->store('services', 'public');
-        }
+        // if ($request->hasFile('image')) {
+        //     if ($service->image) {
+        //         Storage::delete('public/' . $service->image);
+        //     }
+        //     $service->image = $request->file('image')->store('services', 'public');
+        // }
 
         $service->title = $request->title;
         $service->date = $request->date;
         $service->description = $request->description;
+
+        if ($request->hasFile('image')) {
+
+            if ($service->image && file_exists(public_path('assets/service/' . $service->image))) {
+                unlink(public_path('assets/service/' . $service->image));
+            }
+            $image = $request->file('image');
+            $imageFileName = 'service' . rand() . time() . '.' . $image->getClientOriginalExtension();
+            $path = 'assets/service';
+            $image->move(public_path($path), $imageFileName);
+            $service->image = $imageFileName;
+        }
         $service->save();
 
         return redirect()->route('services.index')->with('success', 'Service updated successfully!');

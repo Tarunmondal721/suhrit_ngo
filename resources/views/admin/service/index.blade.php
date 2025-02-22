@@ -96,7 +96,7 @@
 
                 </div>
                 <div class="modal-body">
-                    <form id="editServiceForm" method="POST" enctype="multipart/form-data">
+                    <form id="editServiceForm" method="POST" enctype="multipart/form-data" action="">
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="edit-service-id" name="id">
@@ -153,6 +153,7 @@
             $('#edit-service-description').val(description);
             $('#current-service-image').attr('src', image);
 
+            $('#editServiceForm').attr('action', '/admin/services/' + id);
             // Show the modal
             $('#editServiceModal').modal('show');
         });
