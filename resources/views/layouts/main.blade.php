@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
 
 
 
@@ -60,7 +62,8 @@
                         <ul class="ulright">
                             <li> <small>Folow Us </small>:</li>
                             <li>
-                                <a href="https://www.facebook.com/share/151kwnAnug/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-square"></i></a>
+                                <a href="https://www.facebook.com/share/151kwnAnug/" target="_blank"
+                                    rel="noopener noreferrer"><i class="fab fa-facebook-square"></i></a>
                             </li>
                             <li>
                                 <i class="fab fa-twitter-square"></i>
@@ -137,22 +140,22 @@
     </header>
     @yield('content')
     @if (session('success'))
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            toastr.success("{{ session('success') }}", "Success");
-        });
-    </script>
-@endif
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                toastr.success("{{ session('success') }}", "Success");
+            });
+        </script>
+    @endif
 
-@if ($errors->any())
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            @foreach ($errors->all() as $error)
-                toastr.error("{{ $error }}", "Error");
-            @endforeach
-        });
-    </script>
-@endif
+    @if ($errors->any())
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                @foreach ($errors->all() as $error)
+                    toastr.error("{{ $error }}", "Error");
+                @endforeach
+            });
+        </script>
+    @endif
 
 
     <!-- Donate Modal -->
@@ -178,7 +181,8 @@
 
                     <div class="whatsapp-info">
                         <p class="share-text">Share A Screenshot to <a href="https://bit.ly/3KRjqUm"
-                                class="whatsapp-link"><strong>WhatsApp</strong></a> At <span class="phone">+91 865 368
+                                class="whatsapp-link"><strong>WhatsApp</strong></a> At <span class="phone">+91 865
+                                368
                                 1154</span> After Donating</p>
                     </div>
 
@@ -189,7 +193,8 @@
 
                     <div class="whatsapp-info">
                         <p class="share-text">Share A Screenshot to <a href="https://bit.ly/3KRjqUm"
-                                class="whatsapp-link"><strong>WhatsApp</strong></a> At <span class="phone">+91 865 368
+                                class="whatsapp-link"><strong>WhatsApp</strong></a> At <span class="phone">+91 865
+                                368
                                 1154</span> After Donating</p>
                     </div>
                 </div>
@@ -282,134 +287,64 @@
     </div> --}}
 
     <footer class="footer-section">
-        <div class="container">
-            <div class="footer-cta pt-5 pb-5">
+        <!-- Background Animation -->
+        <div id="particles-js"></div>
+
+        <div class="container position-relative">
+            <div class="footer-top py-5">
                 <div class="row">
-                    <div class="col-xl-4 col-md-4 mb-30">
-                        <div class="single-cta">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div class="cta-text">
-                                <h4>Find us</h4>
-                                <span>Contai, 721401, West Bengal</span>
-                            </div>
+                    <div class="col-md-4">
+                        <h4 class="footer-title">Find Us</h4>
+                        <div class="footer-contact">
+                            <p><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span> Contai, 721401, West Bengal</p>
+                            <p><span class="contact-icon"><i class="fas fa-phone"></i></span>
+                                <a href="tel:+918653681154">+91 865 368 1154</a>
+                            </p>
+                            <p><span class="contact-icon"><i class="far fa-envelope"></i></span>
+                                <a href="mailto:suhritorganization@gmail.com">suhritorganization@gmail.com</a>
+                            </p>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-md-4 mb-30">
-                        <div class="single-cta">
-                            <i class="fas fa-phone"></i>
-                            <div class="cta-text">
-                                <h4>Call us</h4>
-                                <span><a href="tel:+918653681154">
-                                        +91 865 368 1154
-                                    </a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-4 mb-30">
-                        <div class="single-cta">
-                            <i class="far fa-envelope-open"></i>
-                            <div class="cta-text">
-                                <h4>Mail Us</h4>
-                                <span><a
-                                        href="mailto:suhritorganization@gmail.com">suhritorganization@gmail.com</a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-content pt-5 pb-5">
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 mb-50">
-                        <div class="footer-widget">
-                            <div class="footer-logo">
-                                <a href="{{ route('home') }}"><img class=""
-                                        src="{{ asset('assets/images/logo.png') }}" class="img-fluid"
-                                        alt="logo"></a>
-                            </div>
-                            <div class="footer-text">
-                                <p>Lorem ipsum dolor sit amet, consec tetur adipisicing elit, sed do eiusmod tempor
-                                    incididuntut consec tetur adipisicing
-                                    elit,Lorem ipsum dolor sit amet.</p>
-                            </div>
-                            <div class="footer-social-icon">
-                                <span>Follow us</span>
-                                <a href="https://www.facebook.com/share/151kwnAnug/" class="social-icon facebook">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a href="https://youtube.com/@suhrit2023?si=a4LJeVNLSl_Jxa8U" class="social-icon youtube">
-                                    <i class="fab fa-youtube"></i>
-                                </a>
-                                <a href="https://www.instagram.com/suhritorganization?igsh=MzB5MzNuMDNpNWdp" class="social-icon instagram">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                            </div>
 
-                            {{-- <div class="footer-social-icon ">
-                                <span >Follow Us</span>
-
-                            </div> --}}
-
-                        </div>
+                    <div class="col-md-4">
+                        <h4 class="footer-title">Quick Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="{{ route('home') }}">Home</a></li>
+                            <li><a href="{{ route('about') }}">About Us</a></li>
+                            <li><a href="{{ route('service') }}">Our Services</a></li>
+                            <li><a href="{{ route('blog') }}">Blog</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
-                        <div class="footer-widget">
-                            <div class="footer-widget-heading">
-                                <h3>Useful Links</h3>
-                            </div>
-                            <ul>
-                                <li><a href="{{ route('home') }}">Home</a></li>
-                                <li><a href="{{ route('about') }}">About us</a></li>
-                                <li><a href="{{ route('service') }}">Our Services</a></li>
-                                <li><a href="{{ route('blog') }}">Blog</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                            </ul>
+                    <div class="col-md-4 text-center">
+                        <h4 class="footer-title">Follow Us</h4>
+                        <div class="footer-social">
+                            <a href="https://www.facebook.com/share/151kwnAnug/" class="social-icon facebook"
+                                target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://youtube.com/@suhrit2023?si=a4LJeVNLSl_Jxa8U" class="social-icon youtube"
+                                target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.instagram.com/suhritorganization?igsh=MzB5MzNuMDNpNWdp"
+                                class="social-icon instagram" target="_blank"><i class="fab fa-instagram"></i></a>
                         </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
-                        <div class="footer-widget">
-                            <div class="footer-widget-heading">
-                                <h3>Subscribe</h3>
-                            </div>
-                            <div class="footer-text mb-25">
-                                <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
-                            </div>
-                            <div class="subscribe-form">
-                                <form action="#">
-                                    <input type="text" placeholder="Email Address">
-                                    <button><i class="fab fa-telegram-plane"></i></button>
-                                </form>
-                            </div>
-                        </div>
+
+                        <h4 class="footer-title mt-3">Subscribe</h4>
+                        <form class="subscribe-form">
+                            <input type="email" placeholder="Enter your email" required>
+                            <button type="submit"><i class="fab fa-telegram-plane"></i></button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        @php
-            $y = \Carbon\Carbon::now()->format('Y');
-        @endphp
-        <div class="copyright-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 text-center text-lg-left">
-                        <div class="copyright-text">
-                            <p>Copyright &copy; {{ $y }}, All Right Reserved | Develop By Suhrit Organisation</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
-                        <div class="footer-menu">
-                            <ul>
-                                <li><a href="{{ route('home') }}">Home</a></li>
-                                <li><a href="#">Terms</a></li>
-                                <li><a href="#">Privacy</a></li>
-                                <li><a href="#">Policy</a></li>
-                                <li><a href="#">Contact</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+        <div class="footer-bottom text-center py-3">
+            <p>&copy; {{ now()->year }} All Rights Reserved | Developed by Suhrit Organisation</p>
         </div>
     </footer>
+
+
+
+
     <!-- Scroll Up -->
     <div id="back-top">
         <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
@@ -446,6 +381,124 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
+
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     const canvas = document.getElementById("backgroundCanvas");
+    //     const ctx = canvas.getContext("2d");
+
+    //     let particles = [];
+    //     const particleCount = 120; // Increase for more particles
+
+    //     function setCanvasSize() {
+    //         canvas.width = window.innerWidth;
+    //         canvas.height = document.querySelector(".footer-section").offsetHeight;
+    //     }
+
+    //     setCanvasSize();
+    //     window.addEventListener("resize", setCanvasSize);
+
+    //     function Particle() {
+    //         this.x = Math.random() * canvas.width;
+    //         this.y = Math.random() * canvas.height;
+    //         this.radius = Math.random() * 3 + 1; // Varying sizes
+    //         this.alpha = Math.random() * 0.5 + 0.3; // Soft glow effect
+    //         this.speedX = (Math.random() - 0.5) * 0.7;
+    //         this.speedY = (Math.random() - 0.5) * 0.7;
+    //         this.flicker = Math.random() * 0.02 + 0.01; // Flickering effect
+
+    //         this.draw = function() {
+    //             ctx.beginPath();
+    //             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    //             ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+    //             ctx.shadowBlur = 5; // Soft glow
+    //             ctx.shadowColor = "white";
+    //             ctx.fill();
+    //         };
+
+    //         this.update = function() {
+    //             this.x += this.speedX;
+    //             this.y += this.speedY;
+    //             this.alpha += this.flicker * (Math.random() > 0.5 ? 1 : -1);
+
+    //             if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+    //             if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+    //             this.draw();
+    //         };
+    //     }
+
+    //     function initParticles() {
+    //         particles = [];
+    //         for (let i = 0; i < particleCount; i++) {
+    //             particles.push(new Particle());
+    //         }
+    //     }
+
+    //     function animate() {
+    //         ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //         particles.forEach(p => p.update());
+    //         requestAnimationFrame(animate);
+    //     }
+
+    //     initParticles();
+    //     animate();
+    // });
+
+
+particlesJS("particles-js", {
+    "particles": {
+        "number": {
+            "value": 80,
+            "density": { "enable": true, "value_area": 800 }
+        },
+        "color": {
+            "value": ["#ff7eb3", "#ff758c", "#ff6a88", "#ff5e81", "#ff5079"] // Gradient colors
+        },
+        "shape": {
+            "type": "circle",
+            "stroke": { "width": 0, "color": "#000000" }
+        },
+        "opacity": {
+            "value": 0.5,
+            "random": true,
+            "anim": { "enable": false }
+        },
+        "size": {
+            "value": 3,
+            "random": true,
+            "anim": { "enable": false }
+        },
+        "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+        },
+        "move": {
+            "enable": true,
+            "speed": 2,
+            "direction": "none",
+            "random": false,
+            "straight": false,
+            "out_mode": "out"
+        }
+    },
+    "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+            "onhover": { "enable": true, "mode": "repulse" },
+            "onclick": { "enable": true, "mode": "push" },
+            "resize": true
+        },
+        "modes": {
+            "repulse": { "distance": 100, "duration": 0.4 }
+        }
+    },
+    "retina_detect": true
+});
+
+
 
 </script>
 
