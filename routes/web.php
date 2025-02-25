@@ -12,6 +12,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OTPController;
+use App\Http\Controllers\DonationController;
 use Inertia\Inertia;
 
 // Route::get('/', function () {
@@ -53,6 +54,9 @@ Route::prefix('suhrit')->group(function(){
 
     Route::post('/send-otp', [OTPController::class, 'sendOTP'])->name('send.otp');
     Route::post('/verify-otp', [OTPController::class, 'verifyOTP'])->name('verify.otp');
+
+    Route::post('/donate', [DonationController::class, 'store'])->name('donation.store');
+    Route::post('/update-payment', [DonationController::class, 'updatePayment'])->name('donation.updatePayment');
 
 });
 

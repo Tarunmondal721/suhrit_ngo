@@ -159,7 +159,7 @@
 
 
     <!-- Donate Modal -->
-    <div class="modal fade" id="donateModal" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel"
+    {{-- <div class="modal fade" id="donateModal" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -200,91 +200,60 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+
+
+    <!-- Donate Modal -->
+    <div class="modal fade" id="donateModal" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg rounded">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title fw-bold">❤️ Donate Now</h5>
+                    <button type="button" class="close btn-close text-white" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="donationForm" class="p-3">
+                        @csrf
+                        <input type="text" name="name" placeholder="Full Name" required
+                            class="form-control mb-2 shadow-sm">
+                        <input type="email" name="email" placeholder="Email" required
+                            class="form-control mb-2 shadow-sm">
+                        <input type="tel" name="phone" placeholder="Phone Number" required
+                            class="form-control mb-2 shadow-sm">
+                        <textarea name="address" placeholder="Address" required class="form-control mb-2 shadow-sm"></textarea>
+                        <input type="number" id="amount" name="amount" placeholder="Enter donation amount"
+                            required class="form-control mb-3 shadow-sm" min="1">
+                        <button type="submit" id="generateUPI"
+                            class="btn btn-success w-100 shadow-sm fw-bold">Generate Payment Link</button>
+                    </form>
+
+                    <!-- UPI Payment Section -->
+                    <div id="upiContainer" class="mt-3 text-center" style="display: none;">
+                        <h5 class="text-success fw-bold">Scan & Pay</h5>
+                        <canvas id="upiQR" class="shadow-lg rounded mb-2"></canvas>
+                        <a id="upiLink" href="#" class="btn btn-primary w-100 shadow-sm fw-bold"
+                            target="_blank">Pay with UPI</a>
+                    </div>
+
+                    <!-- Transaction Confirmation Section -->
+                    <div id="paymentConfirmation" class="mt-3 text-center" style="display: none;">
+                        <h6 class="fw-bold">Enter Transaction ID</h6>
+                        <input type="text" id="transaction_id" class="form-control mb-2 shadow-sm text-center"
+                            placeholder="Transaction ID">
+                        <button type="button" id="confirmPayment"
+                            class="btn btn-success w-100 shadow-sm fw-bold">Confirm Payment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- ###### Footer Section ##### --}}
 
-    {{-- <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-12">
-                    <h2>About Us</h2>
-                    <p>
-                        Smart Eye is a leading provider of information technology, consulting, and business process
-                        services. Our dedicated employees offer strategic insights, technological expertise and industry
-                        experience.
-                    </p>
-                    <p>We focus on technologies that promise to reduce costs, streamline processes and speed
-                        time-to-market, Backed by our strong quality processes and rich experience managing global...
-                    </p>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <h2>Useful Links</h2>
-                    <ul class="list-unstyled link-list">
-                        <li><a ui-sref="about" href="#/about">About us</a><i class="fa fa-angle-right"></i></li>
-                        <li><a ui-sref="portfolio" href="#/portfolio">Portfolio</a><i class="fa fa-angle-right"></i>
-                        </li>
-                        <li><a ui-sref="products" href="#/products">Latest jobs</a><i class="fa fa-angle-right"></i>
-                        </li>
-                        <li><a ui-sref="gallery" href="#/gallery">Gallery</a><i class="fa fa-angle-right"></i></li>
-                        <li><a ui-sref="contact" href="#/contact">Contact us</a><i class="fa fa-angle-right"></i></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 col-sm-12 map-img">
-                    <h2>Contact Us</h2>
-                    <address class="md-margin-bottom-40">
-                        BlueDart <br>
-                        Marthandam (K.K District) <br>
-                        Tamil Nadu, IND <br>
-                        Phone: +91 9159669599 <br>
-                        Email: <a href="mailto:info@anybiz.com" class="">info@bluedart.in</a><br>
-                        Web: <a href="smart-eye.html" class="">www.bluedart.in</a>
-                    </address>
 
-                </div>
-            </div>
-
-
-            <div class="nav-box row clearfix">
-                <div class="inner col-md-9 clearfix">
-                    <ul class="footer-nav clearfix">
-                        <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="{{ route('about') }}">About</a></li>
-                        <li><a href="{{ route('gallery') }}">Gallery</a></li>
-                        <li><a href="{{ route('service') }}">Servies</a></li>
-                        <li><a href="{{ route('blog') }}">Blog</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-
-
-                </div>
-                <div class="donate-link col-md-3"><a href="donate.html" class="btn btn-primary "><span
-                            class="btn-title">Donate Now</span></a></div>
-            </div>
-
-        </div>
-
-
-    </footer>
-    @php
-        $y = \Carbon\Carbon::now()->format('Y');
-    @endphp
-
-    <div class="copy">
-        <div class="container">
-            <a href="{{ route('home') }}">{{ $y }} &copy; All Rights Reserved | Designed and Developed
-                by</a>
-
-            <span>
-                <a class="nav"><i class="fab fa-github"></i></a>
-                <a><i class="fab fa-google-plus-g"></i></a>
-                <a><i class="fab fa-pinterest-p"></i></a>
-                <a><i class="fab fa-twitter"></i></a>
-                <a><i class="fab fa-facebook-f"></i></a>
-            </span>
-        </div>
-
-    </div> --}}
 
     <footer class="footer-section">
         <!-- Background Animation -->
@@ -296,7 +265,8 @@
                     <div class="col-md-4">
                         <h4 class="footer-title">Find Us</h4>
                         <div class="footer-contact">
-                            <p><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span> Contai, 721401, West Bengal</p>
+                            <p><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span> Contai, 721401,
+                                West Bengal</p>
                             <p><span class="contact-icon"><i class="fas fa-phone"></i></span>
                                 <a href="tel:+918653681154">+91 865 368 1154</a>
                             </p>
@@ -362,11 +332,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 <!-- Toastr JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<!-- Firebase SDK -->
-{{-- <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script> --}}
 
-{{-- <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script> --}}
 <script>
     toastr.options = {
         "closeButton": true,
@@ -445,62 +411,171 @@
     // });
 
 
-particlesJS("particles-js", {
-    "particles": {
-        "number": {
-            "value": 80,
-            "density": { "enable": true, "value_area": 800 }
+    particlesJS("particles-js", {
+        "particles": {
+            "number": {
+                "value": 80,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": ["#ff7eb3", "#ff758c", "#ff6a88", "#ff5e81", "#ff5079"] // Gradient colors
+            },
+            "shape": {
+                "type": "circle",
+                "stroke": {
+                    "width": 0,
+                    "color": "#000000"
+                }
+            },
+            "opacity": {
+                "value": 0.5,
+                "random": true,
+                "anim": {
+                    "enable": false
+                }
+            },
+            "size": {
+                "value": 3,
+                "random": true,
+                "anim": {
+                    "enable": false
+                }
+            },
+            "line_linked": {
+                "enable": true,
+                "distance": 150,
+                "color": "#ffffff",
+                "opacity": 0.4,
+                "width": 1
+            },
+            "move": {
+                "enable": true,
+                "speed": 2,
+                "direction": "none",
+                "random": false,
+                "straight": false,
+                "out_mode": "out"
+            }
         },
-        "color": {
-            "value": ["#ff7eb3", "#ff758c", "#ff6a88", "#ff5e81", "#ff5079"] // Gradient colors
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": {
+                    "enable": true,
+                    "mode": "repulse"
+                },
+                "onclick": {
+                    "enable": true,
+                    "mode": "push"
+                },
+                "resize": true
+            },
+            "modes": {
+                "repulse": {
+                    "distance": 100,
+                    "duration": 0.4
+                }
+            }
         },
-        "shape": {
-            "type": "circle",
-            "stroke": { "width": 0, "color": "#000000" }
-        },
-        "opacity": {
-            "value": 0.5,
-            "random": true,
-            "anim": { "enable": false }
-        },
-        "size": {
-            "value": 3,
-            "random": true,
-            "anim": { "enable": false }
-        },
-        "line_linked": {
-            "enable": true,
-            "distance": 150,
-            "color": "#ffffff",
-            "opacity": 0.4,
-            "width": 1
-        },
-        "move": {
-            "enable": true,
-            "speed": 2,
-            "direction": "none",
-            "random": false,
-            "straight": false,
-            "out_mode": "out"
-        }
-    },
-    "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-            "onhover": { "enable": true, "mode": "repulse" },
-            "onclick": { "enable": true, "mode": "push" },
-            "resize": true
-        },
-        "modes": {
-            "repulse": { "distance": 100, "duration": 0.4 }
-        }
-    },
-    "retina_detect": true
-});
-
-
-
+        "retina_detect": true
+    });
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+<script>
+    document.getElementById("donationForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let formData = new FormData(this);
+
+        fetch("{{ route('donation.store') }}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    let upiURL =
+                        `upi://pay?pa=SERPURSUHRITWELFARE@IOB&pn=Donation&am=${formData.get('amount')}&cu=INR&tn=Donation`;
+                    document.getElementById("upiLink").href = upiURL;
+                    document.getElementById("upiContainer").style.display = "block";
+                    // document.getElementById("generateUPI").style.display = "none";
+
+                    // Generate QR Code
+                    let qr = new QRious({
+                        element: document.getElementById("upiQR"),
+                        value: upiURL,
+                        size: 200
+                    });
+
+                    localStorage.setItem("donation_id", data.donation_id);
+                    document.getElementById("paymentConfirmation").style.display = "block";
+                } else {
+                    alert("Error: " + data.error);
+                }
+            })
+            .catch(error => {
+                console.error("Fetch Error:", error);
+                alert("❌ Something went wrong. Please try again.");
+            });
+    });
+
+
+    document.getElementById("confirmPayment").addEventListener("click", function() {
+        let transactionId = document.getElementById("transaction_id").value.trim();
+
+        if (transactionId === "") {
+            alert("⚠️ Please enter the transaction ID.");
+            return;
+        }
+
+        fetch("{{ route('donation.updatePayment') }}", {
+                method: "POST",
+                body: JSON.stringify({
+                    donation_id: localStorage.getItem("donation_id"),
+                    transaction_id: transactionId
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("✅ Payment confirmed! Thank you for your donation.");
+
+                    // Hide confirmation input & button after success
+                    document.getElementById("paymentConfirmation").style.display = "none";
+
+                    // Optional: Clear transaction ID input
+                    document.getElementById("transaction_id").value = "";
+
+                    $('#donateModal').modal('hide');
+                } else {
+                    alert("❌ " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("⚠️ Something went wrong. Please try again.");
+            });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
 @stack('scripts')
