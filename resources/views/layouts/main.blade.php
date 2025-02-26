@@ -37,6 +37,8 @@
 </head>
 
 <body>
+    {{-- <div id="particles-js"></div> --}}
+
     <header class="continer-fluid header-sticky ">
         <div class="header-top">
             <div class="container">
@@ -348,140 +350,94 @@
         "hideMethod": "fadeOut"
     };
 
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     const canvas = document.getElementById("backgroundCanvas");
-    //     const ctx = canvas.getContext("2d");
-
-    //     let particles = [];
-    //     const particleCount = 120; // Increase for more particles
-
-    //     function setCanvasSize() {
-    //         canvas.width = window.innerWidth;
-    //         canvas.height = document.querySelector(".footer-section").offsetHeight;
-    //     }
-
-    //     setCanvasSize();
-    //     window.addEventListener("resize", setCanvasSize);
-
-    //     function Particle() {
-    //         this.x = Math.random() * canvas.width;
-    //         this.y = Math.random() * canvas.height;
-    //         this.radius = Math.random() * 3 + 1; // Varying sizes
-    //         this.alpha = Math.random() * 0.5 + 0.3; // Soft glow effect
-    //         this.speedX = (Math.random() - 0.5) * 0.7;
-    //         this.speedY = (Math.random() - 0.5) * 0.7;
-    //         this.flicker = Math.random() * 0.02 + 0.01; // Flickering effect
-
-    //         this.draw = function() {
-    //             ctx.beginPath();
-    //             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    //             ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
-    //             ctx.shadowBlur = 5; // Soft glow
-    //             ctx.shadowColor = "white";
-    //             ctx.fill();
-    //         };
-
-    //         this.update = function() {
-    //             this.x += this.speedX;
-    //             this.y += this.speedY;
-    //             this.alpha += this.flicker * (Math.random() > 0.5 ? 1 : -1);
-
-    //             if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-    //             if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-
-    //             this.draw();
-    //         };
-    //     }
-
-    //     function initParticles() {
-    //         particles = [];
-    //         for (let i = 0; i < particleCount; i++) {
-    //             particles.push(new Particle());
-    //         }
-    //     }
-
-    //     function animate() {
-    //         ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //         particles.forEach(p => p.update());
-    //         requestAnimationFrame(animate);
-    //     }
-
-    //     initParticles();
-    //     animate();
-    // });
 
 
     particlesJS("particles-js", {
-        "particles": {
-            "number": {
-                "value": 80,
-                "density": {
-                    "enable": true,
-                    "value_area": 800
-                }
-            },
-            "color": {
-                "value": ["#ff7eb3", "#ff758c", "#ff6a88", "#ff5e81", "#ff5079"] // Gradient colors
-            },
-            "shape": {
-                "type": "circle",
-                "stroke": {
-                    "width": 0,
-                    "color": "#000000"
-                }
-            },
-            "opacity": {
-                "value": 0.5,
-                "random": true,
-                "anim": {
-                    "enable": false
-                }
-            },
-            "size": {
-                "value": 3,
-                "random": true,
-                "anim": {
-                    "enable": false
-                }
-            },
-            "line_linked": {
+    "particles": {
+        "number": {
+            "value": 100, // Increased particle count
+            "density": {
                 "enable": true,
-                "distance": 150,
-                "color": "#ffffff",
-                "opacity": 0.4,
-                "width": 1
-            },
-            "move": {
-                "enable": true,
-                "speed": 2,
-                "direction": "none",
-                "random": false,
-                "straight": false,
-                "out_mode": "out"
+                "value_area": 900
             }
         },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": true,
-                    "mode": "repulse"
-                },
-                "onclick": {
-                    "enable": true,
-                    "mode": "push"
-                },
-                "resize": true
-            },
-            "modes": {
-                "repulse": {
-                    "distance": 100,
-                    "duration": 0.4
-                }
+        "color": {
+            "value": ["#ff7eb3", "#ff758c", "#ff6a88", "#ff5e81", "#ff5079", "#ff476f"]
+        },
+        "shape": {
+            "type": "circle",
+            "stroke": {
+                "width": 0,
+                "color": "#000000"
             }
         },
-        "retina_detect": true
-    });
+        "opacity": {
+            "value": 0.8, // More visible particles
+            "random": true,
+            "anim": {
+                "enable": true,
+                "speed": 1,
+                "opacity_min": 0.3,
+                "sync": false
+            }
+        },
+        "size": {
+            "value": 5, // Larger particles
+            "random": true,
+            "anim": {
+                "enable": true,
+                "speed": 3,
+                "size_min": 0.5,
+                "sync": false
+            }
+        },
+        "line_linked": {
+            "enable": true,
+            "distance": 130, // Tighter connections
+            "color": "#ffffff",
+            "opacity": 0.5,
+            "width": 1.2
+        },
+        "move": {
+            "enable": true,
+            "speed": 3, // Faster movement
+            "direction": "none",
+            "random": false,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false
+        }
+    },
+    "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+            "onhover": {
+                "enable": true,
+                "mode": "bubble" // Stylish hover effect
+            },
+            "onclick": {
+                "enable": true,
+                "mode": "push"
+            },
+            "resize": true
+        },
+        "modes": {
+            "bubble": {
+                "distance": 100,
+                "size": 8, // Bigger bubbles on hover
+                "duration": 1,
+                "opacity": 1,
+                "speed": 3
+            },
+            "repulse": {
+                "distance": 100,
+                "duration": 0.4
+            }
+        }
+    },
+    "retina_detect": true
+});
+
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>

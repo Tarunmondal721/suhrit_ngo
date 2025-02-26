@@ -98,7 +98,8 @@
                         Pin: 721401<br>
                         Phone:+91 865 368 1154<br>
                         Email:suhritorganization@gmail.com<br>
-                        Website:www.suhrit.com<br>
+                        Website:<a href="https://suhrit-organization.onrender.com/">www.suhrit.com</a>
+                        <br>
                     </div>
                 </div>
 

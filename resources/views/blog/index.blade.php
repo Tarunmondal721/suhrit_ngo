@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    {{ __('Suhrot | Blogs') }}
+    {{ __('Suhrit | Blogs') }}
 @endsection
 
 @section('content')
@@ -63,7 +63,7 @@
                 <div class="modal-content">
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="blogModalLabel">Blog Title</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close text-white hide" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary hide" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -106,6 +106,9 @@
 
                 $('#blogModal').modal('show');
             });
+        });
+        $('.hide').on('click' ,function () {
+            $('#blogModal').modal('hide');
         });
     </script>
 @endpush
