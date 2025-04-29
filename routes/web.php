@@ -56,7 +56,7 @@ Route::prefix('suhrit')->group(function(){
     Route::post('/verify-otp', [OTPController::class, 'verifyOTP'])->name('verify.otp');
 
     Route::post('/donate', [DonationController::class, 'store'])->name('donation.store');
-    Route::post('/update-payment', [DonationController::class, 'updatePayment'])->name('donation.updatePayment');
+    Route::post('/update-payment', [DonationController::class, 'verify'])->name('donation.verify');
 
 });
 
