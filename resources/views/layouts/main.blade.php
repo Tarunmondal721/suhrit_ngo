@@ -639,6 +639,7 @@
                         document.getElementById("paymentConfirmation").style.display = "none";
                         document.getElementById("payment_screenshot").value = "";
                         $('#donateModal').modal('hide');
+                    location.reload();
                     } else {
                         alert("❌ " + data.message);
                     }
@@ -646,6 +647,7 @@
                 .catch(error => {
                     console.error("Error:", error);
                     alert("⚠️ Something went wrong. Please try again.");
+                    location.reload();
                 });
         });
     </script>
