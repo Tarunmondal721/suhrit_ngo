@@ -147,6 +147,14 @@
             });
         </script>
     @endif
+    @if (session('error'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                toastr.error("{{ session('error') }}", "Error");
+            });
+        </script>
+    @endif
+
 
     @if ($errors->any())
         <script>
@@ -220,14 +228,34 @@
                         @csrf
                         <input type="text" name="name" placeholder="Full Name" required
                             class="form-control mb-2 shadow-sm">
-                        <input type="email" name="email" placeholder="Email" required
-                            class="form-control mb-2 shadow-sm">
-                        <input type="tel" name="phone" placeholder="Phone Number" required
-                            class="form-control mb-2 shadow-sm">
-                        <textarea name="address" placeholder="Address" required class="form-control mb-2 shadow-sm"></textarea>
-                        <input type="number" id="amount" name="amount" placeholder="Enter donation amount"
-                            required class="form-control mb-3 shadow-sm" min="1">
-                        <button type="submit" id="generateUPI"
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" class="form-control stylish-input" id="email"
+                                placeholder="Enter your valid email" required>
+
+                            <button type="button" id="sendotp" class="btn btn-info mt-2 stylish-button"
+                                onclick="sendOTP()">Verify
+                                Email</button>
+                        </div>
+
+                        <!-- OTP Section -->
+                        <div class="form-group" id="otpSection" style="display: none;">
+                            <label for="otp">Enter OTP</label>
+                            <input type="text" class="form-control stylish-input" id="otp"
+                                placeholder="Enter OTP">
+                            <button type="button" class="btn btn-success mt-2 stylish-button"
+                                onclick="verifyOTP()">Check OTP</button>
+                            <input type="hidden" id="verificationId" name="verificationId">
+                        </div>
+                        <input type="tel" name="phone" id="phone" hidden placeholder="Phone Number"
+                            required class="form-control mb-2 shadow-sm">
+                        <textarea name="address" placeholder="Address" id="add" hidden required class="form-control mb-2 shadow-sm"></textarea>
+                        <input type="number" id="amount" name="amount" hidden
+                            placeholder="Enter donation amount" required class="form-control mb-3 shadow-sm"
+                            min="1">
+                        <button type="submit" disabled id="generateUPI"
                             class="btn btn-success w-100 shadow-sm fw-bold">Generate Payment Link</button>
                     </form>
 
@@ -241,12 +269,16 @@
 
                     <!-- Transaction Confirmation Section -->
                     <div id="paymentConfirmation" class="mt-3 text-center" style="display: none;">
-                        <h6 class="fw-bold">Enter Transaction ID</h6>
-                        <input type="text" id="transaction_id" class="form-control mb-2 shadow-sm text-center"
-                            placeholder="Transaction ID">
-                        <button type="button" id="confirmPayment"
-                            class="btn btn-success w-100 shadow-sm fw-bold">Confirm Payment</button>
+                        <h6 class="fw-bold">Upload Payment Prove Image</h6>
+                        <input type="file" id="payment_screenshot" accept="image/*"
+                            class="form-control mb-3 shadow-sm" required>
+
+                        <button type="button" id="confirmPayment" class="btn btn-success w-100 shadow-sm fw-bold">
+                            Confirm Payment
+                        </button>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -321,216 +353,368 @@
         <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
     </div>
 
-</body>
-<script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
-<script src="{{ asset('assets/js/popper.min.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/scroll-fixed/jquery-scrolltofixed-min.js') }}"></script>
-<script src="{{ asset('assets/plugins/slider/js/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('assets/js/script.js') }}"></script>
-
-<!-- Lightbox JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-<!-- Toastr JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<script>
-    toastr.options = {
-        "closeButton": true,
-        "progressBar": true,
-        "positionClass": "toast-top-right",
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
 
 
+    <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/scroll-fixed/jquery-scrolltofixed-min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/slider/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
 
-    particlesJS("particles-js", {
-        "particles": {
-            "number": {
-                "value": 100, // Increased particle count
-                "density": {
+    <!-- Lightbox JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+
+
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 100, // Increased particle count
+                    "density": {
+                        "enable": true,
+                        "value_area": 900
+                    }
+                },
+                "color": {
+                    "value": ["#ff7eb3", "#ff758c", "#ff6a88", "#ff5e81", "#ff5079", "#ff476f"]
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    }
+                },
+                "opacity": {
+                    "value": 0.8, // More visible particles
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.3,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 5, // Larger particles
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 3,
+                        "size_min": 0.5,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
                     "enable": true,
-                    "value_area": 900
-                }
-            },
-            "color": {
-                "value": ["#ff7eb3", "#ff758c", "#ff6a88", "#ff5e81", "#ff5079", "#ff476f"]
-            },
-            "shape": {
-                "type": "circle",
-                "stroke": {
-                    "width": 0,
-                    "color": "#000000"
-                }
-            },
-            "opacity": {
-                "value": 0.8, // More visible particles
-                "random": true,
-                "anim": {
+                    "distance": 130, // Tighter connections
+                    "color": "#ffffff",
+                    "opacity": 0.5,
+                    "width": 1.2
+                },
+                "move": {
                     "enable": true,
-                    "speed": 1,
-                    "opacity_min": 0.3,
-                    "sync": false
+                    "speed": 3, // Faster movement
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
                 }
             },
-            "size": {
-                "value": 5, // Larger particles
-                "random": true,
-                "anim": {
-                    "enable": true,
-                    "speed": 3,
-                    "size_min": 0.5,
-                    "sync": false
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "bubble" // Stylish hover effect
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "bubble": {
+                        "distance": 100,
+                        "size": 8, // Bigger bubbles on hover
+                        "duration": 1,
+                        "opacity": 1,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 100,
+                        "duration": 0.4
+                    }
                 }
             },
-            "line_linked": {
-                "enable": true,
-                "distance": 130, // Tighter connections
-                "color": "#ffffff",
-                "opacity": 0.5,
-                "width": 1.2
-            },
-            "move": {
-                "enable": true,
-                "speed": 3, // Faster movement
-                "direction": "none",
-                "random": false,
-                "straight": false,
-                "out_mode": "out",
-                "bounce": false
+            "retina_detect": true
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    {{-- <script>
+        console.log(3455);
+        function handleDonation(params) {
+            console.log("Button clicked");
+            const form = document.getElementById("donationForm");
+            let formData = new FormData(form);
+            console.log(formData);
+            // return false;
+            // fetch("{{ route('donation.store') }}", {
+            //         method: "POST",
+            //         body: formData,
+            //         headers: {
+            //             "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            //         }
+            //     })
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error(`HTTP error! Status: ${response.status}`);
+            //         }
+            //         return response.json();
+            //     })
+            // console.log(response);
+
+            // .then(data => {
+            //         if (data.success) {
+
+            //             const options = {
+            //                 key: data.razorpay_key,
+            //                 amount: data.amount,
+            //                 currency: "INR",
+            //                 name: "Suhrit Organization",
+            //                 description: "Donation Payment",
+            //                 order_id: data.order_id,
+            //                 handler: function(response) {
+            //                     alert("✅ Payment successful! Payment ID: " + response
+            //                         .razorpay_payment_id);
+
+            //                     fetch("{{ route('donation.verify') }}", {
+            //                             method: "POST",
+            //                             headers: {
+            //                                 "Content-Type": "application/json",
+            //                                 "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            //                             },
+            //                             body: JSON.stringify({
+            //                                 donation_id: data.donation_id,
+            //                                 payment_id: response.razorpay_payment_id,
+            //                                 order_id: response.razorpay_order_id,
+            //                                 signature: response.razorpay_signature
+            //                             })
+            //                         })
+            //                         .then(res => res.json())
+            //                         .then(result => {
+            //                             if (result.success) {
+            //                                 alert("✅ Payment verified and saved!");
+            //                                 location.reload();
+            //                             } else {
+            //                                 alert("⚠️ Payment verification failed.");
+            //                                 location.reload();
+            //                             }
+            //                         });
+            //                 },
+            //                 prefill: {
+            //                     name: formData.get("name"),
+            //                     email: formData.get("email"),
+            //                     contact: formData.get("phone")
+            //                 },
+            //                 theme: {
+            //                     color: "#28a745"
+            //                 },
+            //                 method: {
+            //                     upi: true,
+            //                     card: true,
+            //                     netbanking: true,
+            //                     wallet: true
+            //                 }
+            //             };
+
+
+            //             const rzp = new Razorpay(options);
+            //             rzp.open();
+            //         } else {
+            //             alert("Error: " + data.error);
+            //         }
+            //     })
+            //     .catch(error => {
+            //         console.error("Fetch Error:", error);
+            //         alert("❌ Something went wrong. Please try again.");
+            //     });
+        }
+    </script> --}}
+
+
+    <script>
+        document.getElementById("donationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let formData = new FormData(this);
+
+            fetch("{{ route('donation.store') }}", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        let upiURL =
+                            `upi://pay?pa=SERPURSUHRITWELFARE@IOB&pn=Donation&am=${formData.get('amount')}&cu=INR&tn=Donation`;
+                        document.getElementById("upiLink").href = upiURL;
+                        document.getElementById("upiContainer").style.display = "block";
+                        // document.getElementById("generateUPI").style.display = "none";
+
+                        // Generate QR Code
+                        let qr = new QRious({
+                            element: document.getElementById("upiQR"),
+                            value: upiURL,
+                            size: 200
+                        });
+
+                        localStorage.setItem("donation_id", data.donation_id);
+                        document.getElementById("paymentConfirmation").style.display = "block";
+                    } else {
+                        alert("Error: " + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch Error:", error);
+                    alert("❌ Something went wrong. Please try again.");
+                });
+        });
+
+
+        document.getElementById("confirmPayment").addEventListener("click", function() {
+            const screenshot = document.getElementById("payment_screenshot").files[0];
+
+            if (!screenshot) {
+                alert("⚠️ Please upload a payment screenshot.");
+                return;
             }
-        },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": true,
-                    "mode": "bubble" // Stylish hover effect
-                },
-                "onclick": {
-                    "enable": true,
-                    "mode": "push"
-                },
-                "resize": true
-            },
-            "modes": {
-                "bubble": {
-                    "distance": 100,
-                    "size": 8, // Bigger bubbles on hover
-                    "duration": 1,
-                    "opacity": 1,
-                    "speed": 3
-                },
-                "repulse": {
-                    "distance": 100,
-                    "duration": 0.4
-                }
+
+            const formData = new FormData();
+            formData.append("donation_id", localStorage.getItem("donation_id"));
+            formData.append("screenshot", screenshot);
+
+            fetch("{{ route('donation.updatePayment') }}", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("✅ Screenshot uploaded! Awaiting Check verification.");
+                        document.getElementById("paymentConfirmation").style.display = "none";
+                        document.getElementById("payment_screenshot").value = "";
+                        $('#donateModal').modal('hide');
+                    } else {
+                        alert("❌ " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("⚠️ Something went wrong. Please try again.");
+                });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function sendOTP() {
+            let email = $("#email").val();
+
+            if (!email) {
+                toastr.error("Please enter a valid email address.");
+                return;
             }
-        },
-        "retina_detect": true
-    });
-</script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<script>
-    document.getElementById("donationForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        let formData = new FormData(this);
-
-        fetch("{{ route('donation.store') }}", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            $.ajax({
+                url: "{{ route('send.otp') }}",
+                type: "POST",
+                data: {
+                    email: email,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    toastr.success(response.message, "OTP Sent!");
+                    $("#otpSection").show();
+                },
+                error: function(xhr) {
+                    toastr.error(xhr.responseJSON.error, "Error");
                 }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    // Trigger Razorpay Checkout
-                    const options = {
-                        key: data.razorpay_key,
-                        amount: data.amount, // in paise
-                        currency: "INR",
-                        name: "Suhrit Organization",
-                        description: "Donation Payment",
-                        order_id: data.order_id, // You MUST pass order_id for server verification
-                        handler: function(response) {
-                            alert("✅ Payment successful! Payment ID: " + response
-                                .razorpay_payment_id);
-
-                            fetch("{{ route('donation.verify') }}", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                                    },
-                                    body: JSON.stringify({
-                                        donation_id: data.donation_id,
-                                        payment_id: response.razorpay_payment_id,
-                                        order_id: response.razorpay_order_id,
-                                        signature: response.razorpay_signature
-                                    })
-                                })
-                                .then(res => res.json())
-                                .then(result => {
-                                    if (result.success) {
-                                        alert("✅ Payment verified and saved!");
-                                        location.reload();
-                                    } else {
-                                        alert("⚠️ Payment verification failed.");
-                                        location.reload();
-                                    }
-                                });
-                        },
-                        prefill: {
-                            name: formData.get("name"),
-                            email: formData.get("email"),
-                            contact: formData.get("phone")
-                        },
-                        theme: {
-                            color: "#28a745"
-                        },
-                        method: {
-                            upi: true,
-                            card: true,
-                            netbanking: true,
-                            wallet: true
-                        }
-                    };
-
-
-                    const rzp = new Razorpay(options);
-                    rzp.open();
-                } else {
-                    alert("Error: " + data.error);
-                }
-            })
-            .catch(error => {
-                console.error("Fetch Error:", error);
-                alert("❌ Something went wrong. Please try again.");
             });
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        }
 
 
-@stack('scripts')
+        function verifyOTP() {
+            let email = $("#email").val();
+            let otp = $("#otp").val();
+
+            $.ajax({
+                url: "{{ route('verify.otp') }}",
+                type: "POST",
+                data: {
+                    email: email,
+                    otp: otp,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+
+                    toastr.success(response.message, "OTP Verified!");
+
+                    // Hide OTP section and verify button
+                    $("#otpSection").hide();
+                    $("#sendotp").hide();
+
+                    // Show Address and Phone Number fields
+                    $("#add").removeAttr("hidden");
+                    $("#amount").removeAttr("hidden");
+                    $("#phone").removeAttr("hidden");
+
+                    // Enable Register button
+                    $("#generateUPI").prop("disabled", false);
+                },
+                error: function(xhr) {
+                    toastr.error(xhr.responseJSON.error, "OTP Verification Failed");
+                }
+            });
+        }
+    </script>
+
+    @stack('scripts')
+
+</body>
 
 </html>

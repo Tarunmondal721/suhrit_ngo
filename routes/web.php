@@ -56,7 +56,7 @@ Route::prefix('suhrit')->group(function(){
     Route::post('/verify-otp', [OTPController::class, 'verifyOTP'])->name('verify.otp');
 
     Route::post('/donate', [DonationController::class, 'store'])->name('donation.store');
-    Route::post('/update-payment', [DonationController::class, 'verify'])->name('donation.verify');
+    Route::post('/update-payment', [DonationController::class, 'updatePayment'])->name('donation.updatePayment');
 
 });
 
@@ -80,6 +80,12 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function(){
     Route::put('/events/update', [EventController::class, 'update'])->name('admin.event.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('admin.event.destroy');
     Route::delete('/events/{event}', 'EventController@destroy')->name('admin.event.destroy');
+
+    Route::get('/donation',[DonationController::class,'index'])->name('admin.donation');
+    Route::post('/donation', [DonationController::class, 'updateStatus'])->name('donation.updateStatus');
+    Route::post('/donation/send-email/{id}', [DonationController::class, 'sendEmail'])->name('donation.sendEmail');
+
+
 
 
 

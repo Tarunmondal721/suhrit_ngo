@@ -43,7 +43,7 @@
 
         <h1 class="text-center mb-4" style="margin-top: 5%;">Upcoming Events</h1>
 
-        <div class="row">
+        <div class="row scroll-wrapper">
             @if (isset($upcomingEvents) && count($upcomingEvents) > 0)
                 @foreach ($upcomingEvents as $event)
                     <div class="col-lg-4 col-md-6 mb-4">
@@ -211,8 +211,7 @@
 
         <h1 class="text-center mb-4">Completed Events</h1>
 
-        <div class="row">
-            @if (isset($completedEvents) && count($completedEvents) > 0)
+        <div class="row scrollable-gallery" style="max-height: 700px; overflow-y: auto; padding-right: 10px;">            @if (isset($completedEvents) && count($completedEvents) > 0)
                 @foreach ($completedEvents as $event)
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card event-card position-relative bg-light border-success">

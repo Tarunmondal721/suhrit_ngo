@@ -5,92 +5,132 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
 
-
+    {{-- Font Awesome + Google Fonts --}}
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <link rel="stylesheet" type="text/css"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    {{-- Material Dashboard CSS --}}
     <link href="{{ asset('admin/assets/css/material-dashboard.css?v=3.0.4') }}" rel="stylesheet">
     <link href="{{ asset('admin/assets/css/nucleo-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/assets/css/nucleo-svg.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/material-dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/material-dashboard.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/material-dashboard.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/nucleo-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/nucleo-svg.css') }}">
+
+
+    {{-- Favicon --}}
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
 
-
+    {{-- Bootstrap 4, DataTables, Select2 --}}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <!-- Toastr CSS -->
+    {{-- Toastr --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <!-- jQuery (Required for AJAX and Toastr) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- Toastr JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+    {{-- Custom CSS --}}
+    <style>
+        .fixed-plugin .card {
+            display: none;
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1031;
+            transition: all 0.3s ease;
+        }
+
+        .fixed-plugin .card.show-settings {
+            display: block;
+        }
+    </style>
 </head>
 
-<body class="g-sidenav-show  bg-gray-200">
-
+<body class="g-sidenav-show bg-gray-200">
     @include('layouts.inc.sidebar')
-    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
         @include('layouts.inc.navBar')
+
         @yield('content')
+
+        {{-- Toast notifications --}}
         @if (session('success'))
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                toastr.success("{{ session('success') }}", "Success");
-            });
-        </script>
-    @endif
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    toastr.success("{{ session('success') }}", "Success");
+                });
+            </script>
+        @endif
 
-    @if ($errors->any())
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                @foreach ($errors->all() as $error)
-                    toastr.error("{{ $error }}", "Error");
-                @endforeach
-            });
-        </script>
-    @endif
+        @if (session('error'))
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    toastr.error("{{ session('error') }}", "Error");
+                });
+            </script>
+        @endif
+
+        @if ($errors->any())
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    @foreach ($errors->all() as $error)
+                        toastr.error("{{ $error }}", "Error");
+                    @endforeach
+                });
+            </script>
+        @endif
     </main>
+
     @include('layouts.inc.settings')
-    @yield('css')
-    @yield('scripts')
 
-
-    <script src="{{ asset('admin/assets/js/plugins/chartjs.min.js') }}" defer></script>
-    <script src="{{ asset('admin/assets/js/plugins/smooth-scrollbar.min.js') }}" defer></script>
-    <script src="{{ asset('admin/assets/js/plugins/perfect-scrollbar.min.js') }}" defer></script>
-    <script src="{{ asset('admin/assets/js/core/bootstrap.min.js') }}" defer></script>
-    <script src="{{ asset('admin/assets/js/core/popper.min.js') }}" defer></script>
-
-    <script>
-        var win = navigator.platform.indexOf('Win') > -1;
-        if (win && document.querySelector('#sidenav-scrollbar')) {
-            var options = {
-                damping: '0.5'
-            }
-            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-        }
-    </script>
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-
-    {{-- <script src="{{asset('assets/js/material-dashboard.min.js?v=3.0.4')}}" defer></script> --}}
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script> --}}
+    {{-- Scripts --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    {{-- Dashboard JS --}}
+    <script src="{{ asset('admin/assets/js/plugins/chartjs.min.js') }}" defer></script>
+    <script src="{{ asset('admin/assets/js/plugins/perfect-scrollbar.min.js') }}" defer></script>
+    <script src="{{ asset('admin/assets/js/core/popper.min.js') }}" defer></script>
+    <script src="{{ asset('admin/assets/js/core/bootstrap.min.js') }}" defer></script>
+    <script src="{{ asset('admin/assets/js/material-dashboard.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/material-dashboard.js.map') }}"></script>
+    <script src="{{ asset('admin/assets/js/material-dashboard.min.js') }}"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const settingsButton = document.querySelector('.fixed-plugin-button');
+            const pluginCard = document.querySelector('.fixed-plugin .card');
+            const closeButton = document.querySelector('.fixed-plugin-close-button');
+
+            if (settingsButton && pluginCard && closeButton) {
+                settingsButton.addEventListener('click', () => {
+                    pluginCard.classList.toggle('show-settings');
+                });
+
+                closeButton.addEventListener('click', () => {
+                    pluginCard.classList.remove('show-settings');
+                });
+            }
+        });
+
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "5000",
+        };
+    </script>
 
     @stack('scripts')
 

@@ -23,30 +23,32 @@
 
 
     <!-- ************************* Gallery Starts Here ************************** -->
-<div id="portfolio" class="gallery">
-    <div class="container">
-        <div class="row">
-            <!-- Dynamic Filter Buttons -->
-            <div class="gallery-filter d-none d-sm-block">
-                <button class="btn btn-default filter-button" data-filter="all">All</button>
-                @foreach ($categories as $category)
-                    <button class="btn btn-default filter-button" data-filter="{{ $category }}">
-                        {{ ucwords(str_replace('_', ' ', strtolower($category))) }}
-                    </button>
-                @endforeach
+    <div id="portfolio" class="gallery">
+        <div class="container">
+            <div class="row">
+                <!-- Dynamic Filter Buttons -->
+                <div class="gallery-filter d-none d-sm-block mb-3">
+                    <button class="btn btn-default filter-button active" data-filter="all">All</button>
+                    @foreach ($categories as $category)
+                        <button class="btn btn-default filter-button" data-filter="{{ $category }}">
+                            {{ ucwords(str_replace('_', ' ', strtolower($category))) }}
+                        </button>
+                    @endforeach
+                </div>
+    
+                <div class="scrollable-gallery row" style="max-height: 600px; overflow-y: auto;">
+                    @foreach ($galleries as $gallery)
+                        <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 filter {{ $gallery->category }}">
+                            <a href="{{ asset('assets/gallery/' . $gallery->image) }}" data-lightbox="gallery" data-title="{{ $gallery->title }}">
+                                <img src="{{ asset('assets/gallery/' . $gallery->image) }}" class="img-responsive gallery-image" alt="{{ $gallery->title }}">
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
             </div>
-            <br />
-
-            @foreach ($galleries as $gallery)
-            <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 filter {{ $gallery->category }}">
-                <a href="{{ asset('assets/gallery/' . $gallery->image) }}" data-lightbox="gallery" data-title="{{ $gallery->title }}">
-                    <img src="{{ asset('assets/gallery/' . $gallery->image) }}" class="img-responsive gallery-image" alt="{{ $gallery->title }}">
-                </a>
-            </div>
-            @endforeach
         </div>
     </div>
-</div>
+    
 <!-- ######## Gallery End ####### -->
 @endsection
 @push('scripts')

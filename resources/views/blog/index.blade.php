@@ -26,8 +26,7 @@
 
     <section class="our-blog">
         <div class="container">
-            <div class="row">
-                @if (!empty($blogs))
+            <div class="row scrollable-gallery" style="max-height: 700px; overflow-y: auto; padding-right: 10px;">                @if (!empty($blogs))
                     @foreach ($blogs as $blog)
                         <div class="col-md-4 mb-4">
                             <div class="single-blog card shadow-sm">

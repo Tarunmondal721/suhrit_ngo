@@ -24,37 +24,39 @@
     <!-- ################# Service Start Here#######################--->
     <section class="services">
         <div class="container">
-            <div class="row">
-                @if (!empty($services))
-                    @foreach ($services as $service)
-                        <div class="col-md-4 col-sm-6">
-                            <div class="service-box">
-                                <img src="{{ asset('assets/service/' . $service->image) }}" alt="{{ $service->title }}">
-                                <h4>{{ $service->title }}</h4>
-                                <p class="desic">{{ Str::limit($service->description, 100) }}</p>
-                                <button class="btn btn-learn-more" data-toggle="modal" data-target="#serviceModal"
-                                    data-id="{{ $service->id }}" data-title="{{ $service->title }}"
-                                    data-date="{{ $service->date }}" data-description="{{ $service->description }}"
-                                    data-image="{{ asset('assets/service/' . $service->image) }}">
-                                    Learn More
-                                </button>
-
-                                <!-- Donate Now Button -->
-                                <button style="margin-top:10px;" class="btn btn-donate-now" data-toggle="modal"
-                                    data-target="#donateModal" data-id="{{ $service->id }}"
-                                    data-title="{{ $service->title }}">
-                                    Donate Now
-                                </button>
+            @if (!empty($services) && $services->count())
+                <div class="scroll-wrapper" style="max-height: 800px; overflow-y: auto;">
+                    <div class="row">
+                        @foreach ($services->take(6) as $service)
+                            <div class="col-md-4 col-sm-6 mb-4">
+                                <div class="service-box p-3 border rounded bg-white">
+                                    <img src="{{ asset('assets/service/' . $service->image) }}" alt="{{ $service->title }}" class="img-fluid">
+                                    <h4 class="mt-2">{{ $service->title }}</h4>
+                                    <p class="desic">{{ Str::limit($service->description, 100) }}</p>
+    
+                                    <button class="btn btn-primary btn-sm mt-2 btn-learn-more"  data-toggle="modal" data-target="#serviceModal"
+                                        data-id="{{ $service->id }}" data-title="{{ $service->title }}"
+                                        data-date="{{ $service->date }}" data-description="{{ $service->description }}"
+                                        data-image="{{ asset('assets/service/' . $service->image) }}">
+                                        Learn More
+                                    </button>
+    
+                                    <button class="btn btn-success btn-sm mt-2" data-toggle="modal"
+                                        data-target="#donateModal" data-id="{{ $service->id }}"
+                                        data-title="{{ $service->title }}">
+                                        Donate Now
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
-                @else
-                    <strong>No Service Available!</strong>
-                @endif
-
-            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <div class="alert alert-info text-center">No Service Available!</div>
+            @endif
         </div>
     </section>
+    
 
     <!-- Service Detail Modal -->
     <div class="modal fade" id="serviceModal" tabindex="-1">
