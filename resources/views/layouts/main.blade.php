@@ -269,7 +269,7 @@
 
                     <!-- Transaction Confirmation Section -->
                     <div id="paymentConfirmation" class="mt-3 text-center" style="display: none;">
-                        <h6 class="fw-bold">Upload Payment Prove Image</h6>
+                        <h6 class="fw-bold text-success">Upload Payment Prove Image</h6>
                         <input type="file" id="payment_screenshot" accept="image/*"
                             class="form-control mb-3 shadow-sm" required>
 
