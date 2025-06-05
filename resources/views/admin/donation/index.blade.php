@@ -60,15 +60,11 @@
 
                             <td class="d-flex gap-2">
                                 <!-- Edit Button -->
-                                <button class="btn btn-warning edit-donation-btn"
-                                    data-id="{{ $donation->id }}"
-                                    data-name="{{ $donation->name }}"
-                                    data-date="{{ $donation->created_at }}"
-                                    data-email="{{ $donation->email }}"
-                                    data-amount="{{ $donation->amount }}"
+                                <button class="btn btn-warning edit-donation-btn" data-id="{{ $donation->id }}"
+                                    data-name="{{ $donation->name }}" data-date="{{ $donation->created_at }}"
+                                    data-email="{{ $donation->email }}" data-amount="{{ $donation->amount }}"
                                     data-image="{{ asset('assets/donation/' . $donation->screenshot_path) }}"
-                                    data-status="{{ $donation->status }}"
-                                    data-bs-toggle="modal"
+                                    data-status="{{ $donation->status }}" data-bs-toggle="modal"
                                     data-bs-target="#editdonationModal">
                                     <i class="fas fa-edit"></i> Edit
                                 </button>
@@ -77,15 +73,24 @@
                                 <form method="POST" action="{{ route('donation.sendEmail', $donation->id) }}">
                                     @csrf
                                     @if ($donation->email_send != 1)
-
-                                    <button type="submit" class="btn btn-info">
-                                        <i class="fas fa-envelope me-1"></i> Email
-                                    </button>
+                                        <button type="submit" class="btn btn-info">
+                                            <i class="fas fa-envelope me-1"></i> Email
+                                        </button>
                                     @else
-                                    <button disabled type="submit" class="btn btn-info">
-                                        <i class="fas fa-envelope me-1"></i> Email
-                                    </button>
+                                        <button disabled type="submit" class="btn btn-info">
+                                            <i class="fas fa-envelope me-1"></i> Email
+                                        </button>
                                     @endif
+                                </form>
+
+                                <!-- Delete Button -->
+                                <form method="POST" action="{{ route('donation.destroy', $donation->id) }}"
+                                    onsubmit="return confirm('Are you sure you want to delete this donation?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>
                                 </form>
                             </td>
 

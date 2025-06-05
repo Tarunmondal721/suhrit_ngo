@@ -51,11 +51,29 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
-                </PrimaryButton>
+            <div class="flex flex-col sm:flex-row items-center justify-between mt-6 gap-3">
+            <!-- Back to Login Link -->
+            <div class="text-sm text-gray-500">
+                Back to
+                <a href="/login" class="text-indigo-600 hover:underline font-medium">
+                    Login
+                </a>
             </div>
+
+            <!-- OR Separator (only shown on small screens) -->
+            <div class="sm:hidden text-xs text-gray-400">OR</div>
+
+            <!-- Submit Button -->
+            <PrimaryButton
+                :class="{ 'opacity-50 cursor-not-allowed': form.processing }"
+                :disabled="form.processing"
+                class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-md shadow transition"
+            >
+                Email Password Reset Link
+            </PrimaryButton>
+        </div>
+
+
         </form>
     </GuestLayout>
 </template>

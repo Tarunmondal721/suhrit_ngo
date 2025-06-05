@@ -3,6 +3,8 @@ import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, useForm } from '@inertiajs/react';
+import { Link } from '@inertiajs/vue3';
+import Login from './Login';
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -43,6 +45,10 @@ export default function ForgotPassword({ status }) {
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Email Password Reset Link
                     </PrimaryButton>
+                </div>
+                <div class="or-text">OR</div>
+                <div class="text-xs text-muted text-center">
+                    Back to <Link href={route('login')}>Login</Link>
                 </div>
             </form>
         </GuestLayout>

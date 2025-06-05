@@ -84,6 +84,8 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function(){
     Route::get('/donation',[DonationController::class,'index'])->name('admin.donation');
     Route::post('/donation', [DonationController::class, 'updateStatus'])->name('donation.updateStatus');
     Route::post('/donation/send-email/{id}', [DonationController::class, 'sendEmail'])->name('donation.sendEmail');
+    Route::delete('/donations/{id}', [DonationController::class, 'destroy'])->name('donation.destroy');
+
 
 
 

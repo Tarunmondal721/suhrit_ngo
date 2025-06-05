@@ -21,5 +21,9 @@
                 {{ __('Email Password Reset Link') }}
             </x-primary-button>
         </div>
+        <div class="or-text">{{ __('OR') }}</div>
+        <div class="text-xs text-muted text-center">
+            {{ __('Back to') }} <a href="{{ route('login') }}">{{ __('Login') }}</a>
+        </div>
     </form>
 </x-guest-layout>
