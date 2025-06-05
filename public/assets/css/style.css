@@ -2264,3 +2264,103 @@ ul {
     background-color: #888;
     border-radius: 10px;
 }
+
+/* ########################## */
+ /* Whatsapp Chat Bot Button */
+
+#whatsapp-chat {
+    position: fixed;
+    bottom: 90px;
+    right: 31px;
+    height: 50px;
+    width: 50px;
+    background: rgba(37, 211, 102, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    z-index: 1000;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    animation: ripple 1.5s infinite;
+    transition: all 0.4s ease-in-out;
+}
+
+#whatsapp-chat:hover {
+    transform: scale(1.15) rotate(5deg);
+    background: rgba(18, 140, 126, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+#whatsapp-chat a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#whatsapp-chat::before {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(37, 211, 102, 0.4);
+    animation: pulse 2s infinite ease-in-out;
+    z-index: -1;
+}
+
+@keyframes ripple {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Tooltip */
+#whatsapp-chat::after {
+    content: "Chat on WhatsApp";
+    position: absolute;
+    right: 70px;
+    background: #222;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    font-size: 14px;
+    opacity: 0;
+    transition: 0.3s ease;
+    transform: translateY(-50%);
+    top: 50%;
+    pointer-events: none;
+}
+
+#whatsapp-chat:hover::after {
+    opacity: 1;
+}
+
+
+

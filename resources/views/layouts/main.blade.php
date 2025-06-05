@@ -353,6 +353,12 @@
         <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
     </div>
 
+    <!-- WhatsApp Chat Button -->
+    <div id="whatsapp-chat">
+        <a href="https://wa.me/9186536811554" target="_blank" title="Chat with us on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
 
 
     <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
