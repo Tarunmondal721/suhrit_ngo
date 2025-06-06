@@ -55,6 +55,12 @@
                                     +91 865 368 1154
                                 </a>
                             </li>
+                             <li>
+                                <a href="tel:+918653681154">
+                                    <i class="fas fa-phone-volume"></i>
+                                    +91 865 368 1154
+                                </a>
+                            </li>
 
                         </ul>
                     </div>
